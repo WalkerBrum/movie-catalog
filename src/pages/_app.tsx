@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Box bg="background.black" height="100vh">
+      <Box bg="background.black" minHeight="100vh">
         <Header />
         <Component {...pageProps} />
       </Box>

@@ -11,8 +11,8 @@ export const theme = extendTheme({
       gray600: '#1A1A1A',
     },
     background: {
-      darkBlue: '#1E6F9F',
-      black: '#0D0D0D',
+      darkBlue: '#113b54',
+      black: '#161616',
       white: '#FFFFFF',
     },
     feedback: {
