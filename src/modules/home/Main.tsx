@@ -50,6 +50,7 @@ export const Main = () => {
             imgUrl={movie.poster_path}
             genreIds={movie.genre_ids}
             key={movie.id}
+            voteAverage={movie.vote_average}
           />
         ))}
       </Grid>

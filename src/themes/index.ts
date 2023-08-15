@@ -18,5 +18,8 @@ export const theme = extendTheme({
     feedback: {
       danger: '#E25858',
     },
+    geners: {
+      yellow: 'yellow',
+    },
   },
 })
