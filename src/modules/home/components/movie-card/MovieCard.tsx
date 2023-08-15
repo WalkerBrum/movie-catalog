@@ -62,16 +62,23 @@ export const MovieCard = ({
       cursor="pointer"
       p={5}
       sx={{ justifySelf: 'center', alignSelf: 'center' }}
-      _hover={{ filter: 'sepia(100%)' }}
+      _hover={{ filter: 'brightness(50%)' }}
     >
-      <Flex direction="column" gap={2}>
+      <Flex
+        direction="column"
+        gap={2}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Heading
           as="h3"
           fontSize={17}
           fontWeight="bold"
           textTransform="uppercase"
-          style={{
-            textShadow: '0px 0px 50px #1281c3',
+          textAlign="center"
+          height={55}
+          sx={{
+            textShadow: '0px 0px 40px #1281c3',
           }}
         >
           {title}
