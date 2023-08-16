@@ -1,5 +1,6 @@
 import { Flex, Card, Heading, Text } from '@chakra-ui/react'
 import { useContext } from 'react'
+import Link from 'next/link'
 
 import { MoviesContext } from '@/context/MoviesContext'
 
@@ -8,6 +9,7 @@ interface IMovieCardProps {
   imgUrl: string
   genreIds: number[]
   voteAverage: number
+  id: number
 }
 
 export const MovieCard = ({
@@ -15,65 +17,66 @@ export const MovieCard = ({
   imgUrl,
   genreIds,
   voteAverage,
+  id,
 }: IMovieCardProps) => {
   const { mapGenreIdsToNames } = useContext(MoviesContext)
 
   return (
-    <Card
-      bgImage={`url(https://image.tmdb.org/t/p/w500${imgUrl})`}
-      bgSize="cover"
-      bgPosition="center"
-      borderRadius="lg"
-      w="220px"
-      h="300px"
-      justify="end"
-      color="base.gray100"
-      cursor="pointer"
-      p={5}
-      sx={{ justifySelf: 'center', alignSelf: 'center' }}
-      _hover={{ filter: 'brightness(50%)' }}
-    >
-      <Flex
-        direction="column"
-        gap={2}
-        justifyContent="center"
-        alignItems="center"
+    <Link href={`/movie/${id}`}>
+      <Card
+        bgImage={`url(https://image.tmdb.org/t/p/w500${imgUrl})`}
+        bgSize="cover"
+        bgPosition="center"
+        borderRadius="lg"
+        w="220px"
+        h="300px"
+        justify="end"
+        color="base.gray100"
+        cursor="pointer"
+        p={5}
+        sx={{ justifySelf: 'center', alignSelf: 'center' }}
+        _hover={{ filter: 'brightness(50%)' }}
       >
-        <Heading
-          as="h3"
-          fontSize={17}
-          fontWeight="bold"
-          textTransform="uppercase"
-          textAlign="center"
-          height={55}
-          sx={{
-            textShadow: '0px 0px 40px #1281c3',
-          }}
+        <Flex
+          direction="column"
+          gap={2}
+          justifyContent="center"
+          alignItems="center"
         >
-          {title}
-        </Heading>
-
-        <Text fontWeight="bold" color="#DAA520">
-          Nota: {voteAverage}
-        </Text>
-
-        <Flex gap={3}>
-          {genreIds &&
-            mapGenreIdsToNames(genreIds)?.map((genre) => (
-              <Text
-                fontWeight="bold"
-                key={genre.id}
-                as="span"
-                bg="blue"
-                p={1}
-                borderRadius={5}
-                fontSize={12}
-              >
-                {genre.name}
-              </Text>
-            ))}
+          <Heading
+            as="h3"
+            fontSize={17}
+            fontWeight="bold"
+            textTransform="uppercase"
+            textAlign="center"
+            height={55}
+            sx={{
+              textShadow: '0px 0px 40px #1281c3',
+            }}
+          >
+            {title}
+          </Heading>
+          <Text fontWeight="bold" color="#DAA520">
+            Nota: {voteAverage}
+          </Text>
+          <Flex gap={3}>
+            {genreIds &&
+              mapGenreIdsToNames(genreIds)?.map((genre) => (
+                <Text
+                  fontWeight="bold"
+                  key={genre.id}
+                  as="span"
+                  bg="blue"
+                  p={1}
+                  borderRadius={5}
+                  fontSize={12}
+                >
+                  {genre.name}
+                </Text>
+              ))}
+          </Flex>
         </Flex>
-      </Flex>
-    </Card>
+      </Card>
+    </Link>
   )
 }

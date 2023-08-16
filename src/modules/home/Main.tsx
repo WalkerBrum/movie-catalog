@@ -23,6 +23,7 @@ export const Main = () => {
             title={infoMovie.title}
             imgUrl={infoMovie.poster_path}
             genreIds={infoMovie.genre_ids}
+            id={infoMovie.id}
             key={infoMovie.id}
             voteAverage={infoMovie.vote_average}
           />
