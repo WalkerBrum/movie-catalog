@@ -1,12 +1,7 @@
 import { Flex, Card, Heading, Text } from '@chakra-ui/react'
-import { useEffect, useState, useCallback } from 'react'
+import { useContext } from 'react'
 
-import { TmdbApi } from '@/services/api'
-
-interface IListGenres {
-  id: number
-  name: string
-}
+import { MoviesContext } from '@/context/MoviesContext'
 
 interface IMovieCardProps {
   title: string
@@ -21,33 +16,7 @@ export const MovieCard = ({
   genreIds,
   voteAverage,
 }: IMovieCardProps) => {
-  const [listGenres, setListGenres] = useState<IListGenres[]>([])
-  const [genres, setGenres] = useState<IListGenres[]>([])
-
-  const mapGenreIdsToNames = useCallback(
-    (genreIds: number[]): IListGenres[] => {
-      const mappedGenres = genreIds.map((id) => {
-        const matchedGenre = listGenres.find((genre) => genre.id === id)
-        return matchedGenre || null
-      })
-
-      return mappedGenres.filter(
-        (genre, index) => genre !== null && index < 2,
-      ) as IListGenres[]
-    },
-    [listGenres],
-  )
-
-  useEffect(() => {
-    const keyApi = `${process.env.NEXT_PUBLIC_API_KEY}`
-
-    TmdbApi.getListGenres(keyApi).then(({ data }) => {
-      setListGenres(data.genres)
-      const validGenres = mapGenreIdsToNames(genreIds)
-
-      setGenres(validGenres)
-    })
-  }, [genreIds, mapGenreIdsToNames])
+  const { mapGenreIdsToNames } = useContext(MoviesContext)
 
   return (
     <Card
@@ -89,19 +58,20 @@ export const MovieCard = ({
         </Text>
 
         <Flex gap={3}>
-          {genres.map((genre) => (
-            <Text
-              fontWeight="bold"
-              key={genre.id}
-              as="span"
-              bg="blue"
-              p={1}
-              borderRadius={5}
-              fontSize={12}
-            >
-              {genre.name}
-            </Text>
-          ))}
+          {genreIds &&
+            mapGenreIdsToNames(genreIds)?.map((genre) => (
+              <Text
+                fontWeight="bold"
+                key={genre.id}
+                as="span"
+                bg="blue"
+                p={1}
+                borderRadius={5}
+                fontSize={12}
+              >
+                {genre.name}
+              </Text>
+            ))}
         </Flex>
       </Flex>
     </Card>
