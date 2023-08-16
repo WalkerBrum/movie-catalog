@@ -78,10 +78,12 @@ export const MoviesContextProvider = ({
 
   const beforePage = () => {
     setPage((prevState) => prevState - 1)
+    window.scrollTo(0, 0)
   }
 
   const nextPage = () => {
     setPage((prevState) => prevState + 1)
+    window.scrollTo(0, 0)
   }
 
   return (

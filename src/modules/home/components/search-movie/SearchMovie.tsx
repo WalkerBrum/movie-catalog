@@ -14,11 +14,16 @@ export const SearchMovie = () => {
         _placeholder={{ color: 'base.gray300' }}
       />
       <Button
-        bg="background.darkBlue"
-        color="base.gray200"
+        bg="background.yellow"
+        color="base.gray500"
         size="lg"
         maxWidth="100px"
-        _hover={{ boxShadow: '0px 0px 30px 0px #1281c3', bg: '#1281c3' }}
+        _hover={{
+          boxShadow: '0px 0px 30px 0px #ffce1f',
+          bg: '#ffce1f',
+          letterSpacing: '1px',
+          fontWeight: 'bolder',
+        }}
       >
         Buscar
       </Button>
