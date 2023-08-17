@@ -34,7 +34,7 @@ export const SearchMovie = () => {
         background="background.yellow"
         color="base.gray500"
         colorHover="#ffce1f"
-        isDisabled={search.length === 0}
+        isDisabled={search.length < 3}
         onClick={searchInfoMovie}
       >
         Buscar

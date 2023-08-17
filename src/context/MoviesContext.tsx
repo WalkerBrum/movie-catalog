@@ -27,7 +27,6 @@ interface IListGenres {
 interface IMoviesContextType {
   infoMovies: IInfoMovies[]
   page: number
-  filterInfoMovie: IInfoMovies[] | undefined
   searchMovie: string
   beforePage: () => void
   nextPage: () => void
@@ -46,9 +45,6 @@ export const MoviesContextProvider = ({
 }: IMoviesContextProviderProps) => {
   const [infoMovies, setInfoMovies] = useState<IInfoMovies[]>([])
   const [listGenres, setListGenres] = useState<IListGenres[]>([])
-  const [filterInfoMovie, setFilterInfoMovie] = useState<
-    IInfoMovies[] | undefined
-  >(undefined)
   const [page, setPage] = useState(1)
   const [searchMovie, setSearchMovie] = useState('')
 
@@ -74,7 +70,7 @@ export const MoviesContextProvider = ({
     if (searchMovie !== '') {
       TmdbApi.filterMovie(keyApi, searchMovie)
         .then(({ data }) => {
-          if (data.results) setFilterInfoMovie(data.results)
+          if (data.results) setInfoMovies(data.results)
         })
         .catch((error) => {
           console.log(error)
@@ -107,10 +103,6 @@ export const MoviesContextProvider = ({
 
   const getSearchMovie = (search: string) => {
     setSearchMovie(search)
-
-    // const findMovie = infoMovies.filter((movie) =>
-    //   movie.title.toLowerCase().includes(search),
-    // )
   }
 
   return (
@@ -122,7 +114,6 @@ export const MoviesContextProvider = ({
         nextPage,
         mapGenreIdsToNames,
         getSearchMovie,
-        filterInfoMovie,
         searchMovie,
       }}
     >

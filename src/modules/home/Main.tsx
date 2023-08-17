@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Flex,
-  Skeleton,
-  Text,
-  Center,
-} from '@chakra-ui/react'
+import { Box, Grid, Flex, Skeleton, Text, Center } from '@chakra-ui/react'
 import { useContext } from 'react'
 
 import { MovieCard } from './components/movie-card/MovieCard'
@@ -20,7 +12,6 @@ export const Main = () => {
     page,
     beforePage,
     nextPage,
-    filterInfoMovie,
     searchMovie,
     getSearchMovie,
   } = useContext(MoviesContext)
@@ -39,7 +30,7 @@ export const Main = () => {
         minHeight={200}
         justifyItems="center"
       >
-        {infoMovies.length > 0 && searchMovie === '' ? (
+        {infoMovies.length > 0 ? (
           infoMovies.map((infoMovie) => (
             <MovieCard
               title={infoMovie.title}
@@ -50,31 +41,7 @@ export const Main = () => {
               voteAverage={infoMovie.vote_average}
             />
           ))
-        ) : filterInfoMovie && filterInfoMovie.length > 0 ? (
-          filterInfoMovie.map(
-            (infoMovie) =>
-              infoMovie.poster_path && (
-                <MovieCard
-                  title={infoMovie.title}
-                  imgUrl={infoMovie.poster_path}
-                  genreIds={infoMovie.genre_ids}
-                  id={infoMovie.id}
-                  key={infoMovie.id}
-                  voteAverage={infoMovie.vote_average}
-                />
-              ),
-          )
-        ) : filterInfoMovie && filterInfoMovie.length < 1 ? (
-          <Text
-            color="feedback.danger"
-            fontSize={30}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            Filme não encontrado
-          </Text>
-        ) : (
+        ) : infoMovies?.length === 0 && searchMovie === '' ? (
           amountLoadingCard.map((number) => (
             <Skeleton
               w="220px"
@@ -87,6 +54,16 @@ export const Main = () => {
               key={number}
             />
           ))
+        ) : (
+          <Text
+            color="feedback.danger"
+            fontSize={30}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            Filme não encontrado
+          </Text>
         )}
       </Grid>
 
@@ -105,7 +82,7 @@ export const Main = () => {
           <ButtonApp
             background="background.yellow"
             color="base.gray500"
-            onClick={beforePage}
+            onClick={nextPage}
             colorHover="#ffce1f"
           >
             Próxima página
