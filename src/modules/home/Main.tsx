@@ -36,6 +36,7 @@ export const Main = () => {
         gap={5}
         p={[4, 8, 10]}
         minHeight={200}
+        justifyItems="center"
       >
         {infoMovies.length > 0 && searchMovie === '' ? (
           infoMovies.map((infoMovie) => (

@@ -26,6 +26,7 @@ export const Header = () => {
         align="center"
         justify="space-between"
         padding={6}
+        gap={3}
       >
         <Link href={'/'}>
           <Flex align="center" justify="start" gap={2}>
