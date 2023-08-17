@@ -12,6 +12,7 @@ import { useContext } from 'react'
 import { MovieCard } from './components/movie-card/MovieCard'
 import { SearchMovie } from './components/search-movie/SearchMovie'
 import { MoviesContext } from '@/context/MoviesContext'
+import { ButtonApp } from '@/components/Button'
 
 export const Main = () => {
   const {
@@ -91,50 +92,35 @@ export const Main = () => {
 
       {infoMovies.length > 0 && searchMovie === '' ? (
         <Flex align="center" justify="space-between" p={[2, 6, 10]}>
-          <Button
-            isDisabled={isDisabledBeforePage}
-            onClick={beforePage}
-            bg="background.yellow"
+          <ButtonApp
+            background="background.yellow"
             color="base.gray500"
-            padding="1rem 1.7rem"
-            _hover={{
-              bg: '#ffce1f',
-              fontWeight: 'bolder',
-              letterSpacing: '1px',
-            }}
+            onClick={beforePage}
+            colorHover="#ffce1f"
+            isDisabled={isDisabledBeforePage}
           >
             Página anterior
-          </Button>
+          </ButtonApp>
 
-          <Button
-            onClick={nextPage}
-            bg="background.yellow"
+          <ButtonApp
+            background="background.yellow"
             color="base.gray500"
-            padding="1rem 1.7rem"
-            _hover={{
-              bg: '#ffce1f',
-              fontWeight: 'bolder',
-              letterSpacing: '1px',
-            }}
+            onClick={beforePage}
+            colorHover="#ffce1f"
           >
             Próxima página
-          </Button>
+          </ButtonApp>
         </Flex>
       ) : (
         <Center>
-          <Button
-            onClick={() => getSearchMovie(search)}
-            bg="background.yellow"
+          <ButtonApp
+            background="background.yellow"
             color="base.gray500"
-            padding="1rem 1.7rem"
-            _hover={{
-              bg: '#ffce1f',
-              fontWeight: 'bolder',
-              letterSpacing: '1px',
-            }}
+            onClick={() => getSearchMovie(search)}
+            colorHover="#ffce1f"
           >
             Todos Filmes
-          </Button>
+          </ButtonApp>
         </Center>
       )}
     </Box>

@@ -14,6 +14,7 @@ import { format } from 'date-fns'
 import { MoviesContext } from '@/context/MoviesContext'
 import { CircularIconWithProgressBar } from './components/circular-progress/CircularIconWithProgressBar'
 import Link from 'next/link'
+import { ButtonApp } from '@/components/Button'
 
 export const DetailMovie = () => {
   const { query } = useRouter()
@@ -253,18 +254,13 @@ export const DetailMovie = () => {
 
       <Center marginBottom={[2, 5, 10]} p={[6, 3, 0]}>
         <Link href="/">
-          <Button
-            bg="background.yellow"
+          <ButtonApp
+            background="background.yellow"
             color="base.gray500"
-            padding="1rem 3rem"
-            _hover={{
-              bg: '#ffce1f',
-              fontWeight: 'bolder',
-              letterSpacing: '1px',
-            }}
+            colorHover="#ffce1f"
           >
             Todos Filmes
-          </Button>
+          </ButtonApp>
         </Link>
       </Center>
     </Box>

@@ -1,3 +1,4 @@
+import { ButtonApp } from '@/components/Button'
 import { MoviesContext } from '@/context/MoviesContext'
 import { Flex, Input, Button } from '@chakra-ui/react'
 import { ChangeEvent, useContext, useState } from 'react'
@@ -29,22 +30,15 @@ export const SearchMovie = () => {
         onChange={handleSearchMovie}
       />
 
-      <Button
-        bg="background.yellow"
+      <ButtonApp
+        background="background.yellow"
         color="base.gray500"
-        size="lg"
-        maxWidth="100px"
+        colorHover="#ffce1f"
         isDisabled={search.length === 0}
-        _hover={{
-          boxShadow: '0px 0px 30px 0px #ffce1f',
-          bg: '#ffce1f',
-          letterSpacing: '1px',
-          fontWeight: 'bolder',
-        }}
         onClick={searchInfoMovie}
       >
         Buscar
-      </Button>
+      </ButtonApp>
     </Flex>
   )
 }

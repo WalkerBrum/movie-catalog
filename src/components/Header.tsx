@@ -3,6 +3,8 @@ import { Flex, Button, Heading, Alert, AlertIcon } from '@chakra-ui/react'
 import { BiCameraMovie } from 'react-icons/bi'
 import Link from 'next/link'
 
+import { ButtonApp } from './Button'
+
 export const Header = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -37,23 +39,15 @@ export const Header = () => {
           </Flex>
         </Link>
 
-        <Button
-          bg="background.yellow"
+        <ButtonApp
+          background="background.yellow"
           color="base.gray500"
           onClick={handleLoginClick}
           isLoading={isLoading}
-          size="lg"
-          maxWidth="100px"
-          padding="1rem 1.7rem"
-          _hover={{
-            boxShadow: '0px 0px 30px 0px #ffce1f',
-            bg: '#ffce1f',
-            letterSpacing: '1px',
-            fontWeight: 'bolder',
-          }}
+          colorHover="#ffce1f"
         >
           Entrar
-        </Button>
+        </ButtonApp>
       </Flex>
 
       {showAlert && (
