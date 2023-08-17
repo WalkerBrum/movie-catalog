@@ -33,8 +33,6 @@ export const DetailMovie = () => {
     `url(https://image.tmdb.org/t/p/w500/${infoMovie?.backdrop_path})`,
   ]
 
-  const search = ''
-
   return (
     <>
       <Head>
