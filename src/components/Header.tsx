@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flex, Button, Heading, Alert, AlertIcon } from '@chakra-ui/react'
+import { Flex, Heading, Alert, AlertIcon } from '@chakra-ui/react'
 import { BiCameraMovie } from 'react-icons/bi'
 import Link from 'next/link'
 

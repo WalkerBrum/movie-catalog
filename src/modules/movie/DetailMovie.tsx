@@ -1,20 +1,12 @@
-import {
-  Flex,
-  Card,
-  Heading,
-  Text,
-  Button,
-  Box,
-  Center,
-} from '@chakra-ui/react'
+import { Flex, Card, Heading, Text, Box, Center } from '@chakra-ui/react'
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { format } from 'date-fns'
 
 import { MoviesContext } from '@/context/MoviesContext'
 import { CircularIconWithProgressBar } from './components/circular-progress/CircularIconWithProgressBar'
-import Link from 'next/link'
 import { ButtonApp } from '@/components/Button'
+import Link from 'next/link'
 
 export const DetailMovie = () => {
   const { query } = useRouter()
@@ -39,6 +31,8 @@ export const DetailMovie = () => {
     `url(https://image.tmdb.org/t/p/w500/${infoMovie?.poster_path})`,
     `url(https://image.tmdb.org/t/p/w500/${infoMovie?.backdrop_path})`,
   ]
+
+  const search = ''
 
   return (
     <Box position="relative">
@@ -252,17 +246,17 @@ export const DetailMovie = () => {
         </Flex>
       </Flex>
 
-      <Center marginBottom={[2, 5, 10]} p={[6, 3, 0]}>
-        <Link href="/">
+      <Link href="/">
+        <Center marginBottom={[2, 5, 10]} p={[6, 3, 0]}>
           <ButtonApp
             background="background.yellow"
             color="base.gray500"
             colorHover="#ffce1f"
           >
-            Todos Filmes
+            Voltar
           </ButtonApp>
-        </Link>
-      </Center>
+        </Center>
+      </Link>
     </Box>
   )
 }

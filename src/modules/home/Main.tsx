@@ -31,16 +31,22 @@ export const Main = () => {
         justifyItems="center"
       >
         {infoMovies.length > 0 ? (
-          infoMovies.map((infoMovie) => (
-            <MovieCard
-              title={infoMovie.title}
-              imgUrl={infoMovie.poster_path}
-              genreIds={infoMovie.genre_ids}
-              id={infoMovie.id}
-              key={infoMovie.id}
-              voteAverage={infoMovie.vote_average}
-            />
-          ))
+          infoMovies.map((infoMovie) => {
+            if (infoMovie.poster_path) {
+              return (
+                <MovieCard
+                  title={infoMovie.title}
+                  imgUrl={infoMovie.poster_path}
+                  genreIds={infoMovie.genre_ids}
+                  id={infoMovie.id}
+                  key={infoMovie.id}
+                  voteAverage={infoMovie.vote_average}
+                />
+              )
+            } else {
+              return null // ou return undefined;
+            }
+          })
         ) : infoMovies?.length === 0 && searchMovie === '' ? (
           amountLoadingCard.map((number) => (
             <Skeleton
@@ -96,7 +102,7 @@ export const Main = () => {
             onClick={() => getSearchMovie(search)}
             colorHover="#ffce1f"
           >
-            Todos Filmes
+            Catálogo inicial
           </ButtonApp>
         </Center>
       )}

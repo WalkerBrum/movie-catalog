@@ -51,13 +51,15 @@ export const MoviesContextProvider = ({
   useEffect(() => {
     const keyApi = `${process.env.NEXT_PUBLIC_API_KEY}`
 
-    TmdbApi.getPopularMovies(page, keyApi)
-      .then(({ data }) => {
-        setInfoMovies(data.results)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (searchMovie === '') {
+      TmdbApi.getPopularMovies(page, keyApi)
+        .then(({ data }) => {
+          setInfoMovies(data.results)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
 
     TmdbApi.getListGenres(keyApi)
       .then(({ data }) => {
@@ -77,8 +79,6 @@ export const MoviesContextProvider = ({
         })
     }
   }, [page, searchMovie])
-
-  // console.log(infoMovies)
 
   const mapGenreIdsToNames = (genreIds: number[]): IListGenres[] => {
     const mappedGenres = genreIds.map((id) => {

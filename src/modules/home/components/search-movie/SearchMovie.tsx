@@ -1,6 +1,6 @@
 import { ButtonApp } from '@/components/Button'
 import { MoviesContext } from '@/context/MoviesContext'
-import { Flex, Input, Button } from '@chakra-ui/react'
+import { Flex, Input } from '@chakra-ui/react'
 import { ChangeEvent, useContext, useState } from 'react'
 
 export const SearchMovie = () => {
@@ -8,8 +8,8 @@ export const SearchMovie = () => {
   const { getSearchMovie } = useContext(MoviesContext)
 
   const handleSearchMovie = (event: ChangeEvent<HTMLInputElement>) => {
-    const eventTagetValue = event.target.value.toLowerCase()
-    setSearch(eventTagetValue)
+    const eventTargetValue = event.target.value.toLowerCase()
+    setSearch(eventTargetValue)
   }
 
   const searchInfoMovie = () => {

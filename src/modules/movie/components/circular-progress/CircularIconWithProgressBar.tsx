@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Text, CircularProgress } from '@chakra-ui/react'
+import { Box, CircularProgress } from '@chakra-ui/react'
 
 interface ICircularIconWithProgressBarProps {
   progress: number
