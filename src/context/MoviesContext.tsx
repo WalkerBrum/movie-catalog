@@ -27,8 +27,11 @@ interface IListGenres {
 interface IMoviesContextType {
   infoMovies: IInfoMovies[]
   page: number
+  filterInfoMovie: IInfoMovies[] | undefined
+  searchMovie: string
   beforePage: () => void
   nextPage: () => void
+  getSearchMovie: (search: string) => void
   mapGenreIdsToNames: (genreIds: number[]) => IListGenres[]
 }
 
@@ -43,7 +46,11 @@ export const MoviesContextProvider = ({
 }: IMoviesContextProviderProps) => {
   const [infoMovies, setInfoMovies] = useState<IInfoMovies[]>([])
   const [listGenres, setListGenres] = useState<IListGenres[]>([])
+  const [filterInfoMovie, setFilterInfoMovie] = useState<
+    IInfoMovies[] | undefined
+  >(undefined)
   const [page, setPage] = useState(1)
+  const [searchMovie, setSearchMovie] = useState('')
 
   useEffect(() => {
     const keyApi = `${process.env.NEXT_PUBLIC_API_KEY}`
@@ -63,7 +70,19 @@ export const MoviesContextProvider = ({
       .catch((error) => {
         console.log(error)
       })
-  }, [page])
+
+    if (searchMovie !== '') {
+      TmdbApi.filterMovie(keyApi, searchMovie)
+        .then(({ data }) => {
+          if (data.results) setFilterInfoMovie(data.results)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [page, searchMovie])
+
+  // console.log(infoMovies)
 
   const mapGenreIdsToNames = (genreIds: number[]): IListGenres[] => {
     const mappedGenres = genreIds.map((id) => {
@@ -86,6 +105,14 @@ export const MoviesContextProvider = ({
     window.scrollTo(0, 0)
   }
 
+  const getSearchMovie = (search: string) => {
+    setSearchMovie(search)
+
+    // const findMovie = infoMovies.filter((movie) =>
+    //   movie.title.toLowerCase().includes(search),
+    // )
+  }
+
   return (
     <MoviesContext.Provider
       value={{
@@ -94,6 +121,9 @@ export const MoviesContextProvider = ({
         beforePage,
         nextPage,
         mapGenreIdsToNames,
+        getSearchMovie,
+        filterInfoMovie,
+        searchMovie,
       }}
     >
       {children}

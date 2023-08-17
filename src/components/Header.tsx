@@ -22,7 +22,7 @@ export const Header = () => {
   return (
     <>
       <Flex
-        bg="background.black"
+        bg="background.gray900"
         align="center"
         justify="space-between"
         padding={6}
@@ -61,7 +61,7 @@ export const Header = () => {
           alignItems="start"
           position="fixed"
           width="100%"
-          marginTop={-9}
+          marginTop={5}
         >
           <Alert
             status="error"
@@ -73,7 +73,7 @@ export const Header = () => {
             p={4}
           >
             <AlertIcon />
-            Essa função ainda não foi implementada.
+            Funcionalidade em desenvolvimento.
           </Alert>
         </Flex>
       )}

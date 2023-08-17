@@ -35,7 +35,7 @@ export const MovieCard = ({
         cursor="pointer"
         p={5}
         sx={{ justifySelf: 'center', alignSelf: 'center' }}
-        _hover={{ filter: 'brightness(50%)' }}
+        _hover={{ filter: 'sepia(100%)' }}
       >
         <Flex
           direction="column"
@@ -66,7 +66,7 @@ export const MovieCard = ({
                   fontWeight="bold"
                   key={genre.id}
                   as="span"
-                  bg={`geners.${genre.id}`}
+                  bg={`genres.${genre.id}`}
                   p={1}
                   borderRadius={5}
                   fontSize={12}

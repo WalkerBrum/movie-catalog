@@ -13,15 +13,17 @@ export const theme = extendTheme({
       yellow500: '#ffce1f',
     },
     background: {
-      darkBlue: '#113b54',
+      gray900: '#252537',
+      blue300: '#32a2f5',
+      blue500: '#1f77ff',
       yellow: '#F7D354',
-      black: '#161616',
+      black: '#1C1C28',
       white: '#FFFFFF',
     },
     feedback: {
       danger: '#E25858',
     },
-    geners: {
+    genres: {
       28: '#bd1313',
       12: '#148c34',
       16: '#d1700f',

@@ -22,9 +22,9 @@ export const CircularIconWithProgressBar = ({
         left="50%"
         transform="translate(-50%, -50%)"
         fontWeight="bold"
-        fontSize={30}
+        fontSize={20}
       >
-        {progress}
+        {progress}%
       </Box>
     </Box>
   )

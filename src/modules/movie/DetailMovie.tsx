@@ -1,13 +1,10 @@
-import { Flex, Card, Heading, Text, CircularProgress } from '@chakra-ui/react'
+import { Flex, Card, Heading, Text } from '@chakra-ui/react'
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import {
-  AiOutlineHeart,
-  AiFillHeart,
-  AiFillStar,
-  AiOutlineOrderedList,
-} from 'react-icons/ai'
+import { AiOutlineHeart, AiFillStar } from 'react-icons/ai'
 import { BsFillBookmarkFill } from 'react-icons/bs'
+import { format } from 'date-fns'
+
 import { MoviesContext } from '@/context/MoviesContext'
 import { CircularIconWithProgressBar } from './components/circular-progress/CircularIconWithProgressBar'
 
@@ -23,6 +20,18 @@ export const DetailMovie = () => {
     ? infoMovie.vote_average * 10
     : 0
 
+  const imageUrls = [
+    `url(https://image.tmdb.org/t/p/w500/${infoMovie?.poster_path})`,
+    `url(https://image.tmdb.org/t/p/w500/${infoMovie?.backdrop_path})`,
+  ]
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const handleImageClick = () => {
+    const nextIndex = (currentImageIndex + 1) % imageUrls.length
+    setCurrentImageIndex(nextIndex)
+  }
+
   return (
     <Flex p="5">
       <Flex
@@ -32,17 +41,28 @@ export const DetailMovie = () => {
         w="30%"
       >
         <Card
-          bgImage={`url(https://image.tmdb.org/t/p/w500/${infoMovie?.poster_path})`}
+          bgImage={imageUrls[currentImageIndex]}
           fontWeight="bold"
           borderRadius="lg"
-          w={400}
-          h={400}
+          w={500}
+          h={500}
           p={5}
           m={2}
-          bgSize="cover"
+          bgSize="100% 100%"
           bgPosition="center"
-          as="span"
-        ></Card>
+          bgRepeat="no-repeat"
+          sx={{
+            cursor: 'pointer',
+            width: '400px',
+            height: '400px',
+            borderRadius: 'lg',
+            perspective: '1000px',
+            transition: 'transform 0.5s ease',
+            transform: currentImageIndex === 1 ? 'rotateY(360deg)' : 'none',
+          }}
+          _hover={{ filter: 'brightness(80%)' }}
+          onClick={handleImageClick}
+        />
       </Flex>
 
       <Flex direction="column" color="white" alignItems="center" w="70%" p={5}>
@@ -60,8 +80,19 @@ export const DetailMovie = () => {
           <AiOutlineHeart />
           <BsFillBookmarkFill></BsFillBookmarkFill>
           <AiFillStar></AiFillStar>
+
           <Text fontWeight="bolder" color="base.yellow500" fontSize={18}>
-            {infoMovie?.release_date}
+            Data de lançamento:{' '}
+            <Text
+              as="span"
+              fontWeight="bold"
+              color="base.gray100"
+              fontSize={16}
+            >
+              {infoMovie?.release_date
+                ? format(new Date(infoMovie.release_date), 'dd/MM/yyyy')
+                : 'Data de lançamento indisponível'}
+            </Text>
           </Text>
         </Flex>
 
@@ -84,7 +115,7 @@ export const DetailMovie = () => {
               {infoMovie?.adult ? 'Sim' : 'Não'}
             </Text>
           </Text>
-          <Flex justify="center" gap={5} alignItems="center">
+          <Flex justify="center" gap={5} align="center">
             <Text fontWeight="bolder" color="base.yellow500" fontSize={18}>
               Gênero:
             </Text>
@@ -95,7 +126,7 @@ export const DetailMovie = () => {
                   fontWeight="bold"
                   as="span"
                   key={genre.id}
-                  bg={`geners.${genre.id}`}
+                  bg={`genres.${genre.id}`}
                   p={2}
                   borderRadius={5}
                   fontSize={16}
@@ -116,14 +147,17 @@ export const DetailMovie = () => {
             p={3}
             fontSize={16}
             maxW={700}
+            minHeight={100}
             color="base.gray100"
           >
-            {infoMovie?.overview}
+            {infoMovie?.overview
+              ? infoMovie.overview
+              : `Ainda não temos uma descrição para o filme ${infoMovie?.title}`}
           </Text>
         </Flex>
 
         <Text
-          p={2}
+          p={5}
           alignSelf="flex-start"
           fontWeight="bolder"
           color="base.yellow500"
