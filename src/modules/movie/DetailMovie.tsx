@@ -1,42 +1,53 @@
-import { Flex, Card, Heading, Text, Box, Center } from '@chakra-ui/react'
-import { useContext, useState } from 'react'
+import { Flex, Heading, Text, Box } from '@chakra-ui/react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { format } from 'date-fns'
 
-import { MoviesContext } from '@/context/MoviesContext'
 import { CircularIconWithProgressBar } from './components/circular-progress/CircularIconWithProgressBar'
-import { ButtonApp } from '@/components/Button'
+import { Button } from '@/components/Button'
 import Link from 'next/link'
 import Head from 'next/head'
+import Image from 'next/image'
+import { IMovieDetailsInfo } from '@/services/api.types'
+import { TmdbApi } from '@/services/api'
 
 export const DetailMovie = () => {
   const { query } = useRouter()
-  const { infoMovies, mapGenreIdsToNames } = useContext(MoviesContext)
-
+  const [movieDetailsInfo, setMovieDetailsInfo] = useState<IMovieDetailsInfo>()
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+
+  const queryId =
+    typeof query.id === 'string' ? parseInt(query.id, 10) : undefined
+
+  if (typeof queryId === 'number') {
+    TmdbApi.getMovie(queryId).then(({ data }) => setMovieDetailsInfo(data))
+  }
 
   const handleImageClick = () => {
     const nextIndex = (currentImageIndex + 1) % imageUrls.length
     setCurrentImageIndex(nextIndex)
   }
 
-  const queryId =
-    typeof query.id === 'string' ? parseInt(query.id, 10) : undefined
-
-  const infoMovie = infoMovies.find((infoMovie) => infoMovie.id === queryId)
-  const progressValue = infoMovie?.vote_average
-    ? infoMovie.vote_average * 10
+  const progressValue = movieDetailsInfo?.vote_average
+    ? movieDetailsInfo.vote_average * 10
     : 0
 
   const imageUrls = [
-    `url(https://image.tmdb.org/t/p/w500/${infoMovie?.poster_path})`,
-    `url(https://image.tmdb.org/t/p/w500/${infoMovie?.backdrop_path})`,
+    `https://image.tmdb.org/t/p/w500/${movieDetailsInfo?.poster_path}`,
+    `https://image.tmdb.org/t/p/w500/${movieDetailsInfo?.backdrop_path}`,
   ]
+
+  const hours =
+    movieDetailsInfo?.runtime && Math.floor(movieDetailsInfo.runtime / 60)
+  const minutes = movieDetailsInfo?.runtime && movieDetailsInfo.runtime % 60
+
+  const formattedTime = `${hours}h ${minutes}m`
 
   return (
     <>
       <Head>
-        <title>{infoMovie?.title}</title>
+        <title>{movieDetailsInfo?.title}</title>
       </Head>
 
       <Box position="relative">
@@ -48,28 +59,25 @@ export const DetailMovie = () => {
           flexDirection={['column', 'column', 'column', 'row']}
         >
           <Flex w={['100%', '70%', '80%', '30%']} justifyContent="center">
-            <Card
-              bgImage={imageUrls[currentImageIndex]}
-              fontWeight="bold"
-              borderRadius="lg"
-              w={500}
-              h={500}
-              p={5}
-              m={2}
-              bgSize="100% 100%"
-              bgPosition="center"
-              bgRepeat="no-repeat"
-              sx={{
+            <Image
+              src={imageUrls[currentImageIndex]}
+              title={`Imagens do filme ${movieDetailsInfo?.title}`}
+              alt={`Imagens do filme ${movieDetailsInfo?.title}`}
+              width={500}
+              height={500}
+              style={{
                 cursor: 'pointer',
                 width: '400px',
                 height: '400px',
-                borderRadius: 'lg',
+                borderRadius: '16px',
                 perspective: '1000px',
                 transition: 'transform 0.5s ease',
                 transform: currentImageIndex === 1 ? 'rotateY(360deg)' : 'none',
+                filter: isHovered ? 'brightness(70%)' : 'none',
               }}
-              _hover={{ filter: 'brightness(80%)' }}
               onClick={handleImageClick}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             />
           </Flex>
 
@@ -81,7 +89,7 @@ export const DetailMovie = () => {
             p={[1, 3, 5]}
           >
             <Heading fontWeight="bold" as="h1" textAlign="center" m={2}>
-              {infoMovie?.title}
+              {movieDetailsInfo?.title}
             </Heading>
 
             <Flex
@@ -91,7 +99,9 @@ export const DetailMovie = () => {
               width="100%"
               p={5}
             >
-              <CircularIconWithProgressBar progress={progressValue} />
+              <CircularIconWithProgressBar
+                progress={Math.floor(progressValue)}
+              />
 
               <Text fontWeight="bolder" color="base.yellow500" fontSize={18}>
                 Data de lançamento:{' '}
@@ -101,8 +111,11 @@ export const DetailMovie = () => {
                   color="base.gray100"
                   fontSize={16}
                 >
-                  {infoMovie?.release_date
-                    ? format(new Date(infoMovie.release_date), 'dd/MM/yyyy')
+                  {movieDetailsInfo?.release_date
+                    ? format(
+                        new Date(movieDetailsInfo.release_date),
+                        'dd/MM/yyyy',
+                      )
                     : 'Data de lançamento indisponível'}
                 </Text>
               </Text>
@@ -125,36 +138,40 @@ export const DetailMovie = () => {
                 marginBottom={[4, 0]}
                 textAlign="center"
               >
-                Conteúdo adulto:{' '}
+                Duração:{' '}
                 <Text
                   as="span"
                   color="base.gray100"
                   fontWeight="bold"
                   fontSize={16}
                 >
-                  {infoMovie?.adult ? 'Sim' : 'Não'}
+                  {formattedTime}
                 </Text>
               </Text>
               <Flex justify="center" gap={5} align="center">
                 <Text fontWeight="bolder" color="base.yellow500" fontSize={18}>
                   Gênero:
                 </Text>
-                {infoMovie?.genre_ids &&
-                  mapGenreIdsToNames(infoMovie?.genre_ids).map((genre) => (
-                    <Text
-                      alignSelf="flex-start"
-                      fontWeight="bold"
-                      as="span"
-                      key={genre.id}
-                      bg={`genres.${genre.id}`}
-                      p={2}
-                      borderRadius={5}
-                      fontSize={16}
-                      color="base.gray100"
-                    >
-                      {genre.name}
-                    </Text>
-                  ))}
+                {movieDetailsInfo?.genres.map((genre, index) => {
+                  if (index < 2) {
+                    return (
+                      <Text
+                        alignSelf="flex-start"
+                        fontWeight="bold"
+                        as="span"
+                        key={genre.id}
+                        bg={`genres.${genre.id}`}
+                        p={2}
+                        borderRadius={5}
+                        fontSize={16}
+                        color="base.gray100"
+                      >
+                        {genre.name}
+                      </Text>
+                    )
+                  }
+                  return null
+                })}
               </Flex>
             </Flex>
 
@@ -178,9 +195,9 @@ export const DetailMovie = () => {
                 minHeight={100}
                 color="base.gray100"
               >
-                {infoMovie?.overview
-                  ? infoMovie.overview
-                  : `Ainda não temos uma descrição para o filme ${infoMovie?.title}`}
+                {movieDetailsInfo?.overview
+                  ? movieDetailsInfo.overview
+                  : `Ainda não temos uma descrição para o filme ${movieDetailsInfo?.title}`}
               </Text>
             </Flex>
 
@@ -191,14 +208,16 @@ export const DetailMovie = () => {
               color="base.yellow500"
               fontSize={18}
             >
-              Título original:{' '}
+              Produzido Por:{' '}
               <Text
                 as="span"
                 fontWeight="bold"
                 color="base.gray100"
                 fontSize={16}
               >
-                {infoMovie?.original_title}
+                {movieDetailsInfo?.production_companies.map(
+                  (company) => company.name,
+                )}
               </Text>
             </Text>
 
@@ -226,7 +245,7 @@ export const DetailMovie = () => {
                   color="base.gray100"
                   as="span"
                 >
-                  {infoMovie?.popularity}
+                  {movieDetailsInfo?.popularity}
                 </Text>
               </Text>
               <Text
@@ -243,7 +262,7 @@ export const DetailMovie = () => {
                   color="base.gray100"
                   as="span"
                 >
-                  {infoMovie?.vote_average}
+                  {movieDetailsInfo?.vote_average}
                 </Text>
               </Text>
             </Flex>
@@ -251,15 +270,15 @@ export const DetailMovie = () => {
         </Flex>
 
         <Link href="/">
-          <Center marginBottom={[2, 5, 10]} p={[6, 3, 0]}>
-            <ButtonApp
+          <Box marginBottom={[2, 5, 10]} p={[6, 3, 0]} margin="0 2rem">
+            <Button
               background="background.yellow"
               color="base.gray500"
               colorHover="#ffce1f"
             >
               Voltar
-            </ButtonApp>
-          </Center>
+            </Button>
+          </Box>
         </Link>
       </Box>
     </>

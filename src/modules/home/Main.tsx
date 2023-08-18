@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { MovieCard } from './components/movie-card/MovieCard'
 import { SearchMovie } from './components/search-movie/SearchMovie'
 import { MoviesContext } from '@/context/MoviesContext'
-import { ButtonApp } from '@/components/Button'
+import { Button } from '@/components/Button'
 
 export const Main = () => {
   const {
@@ -28,7 +28,10 @@ export const Main = () => {
         gap={5}
         p={[4, 8, 10]}
         minHeight={200}
+        maxW={1500}
         justifyItems="center"
+        margin="auto"
+        alignItems="center"
       >
         {infoMovies.length > 0 ? (
           infoMovies.map((infoMovie) => {
@@ -50,8 +53,9 @@ export const Main = () => {
         ) : infoMovies?.length === 0 && searchMovie === '' ? (
           amountLoadingCard.map((number) => (
             <Skeleton
-              w="220px"
-              h="300px"
+              w={[280, 240, 220, 240, 220]}
+              h={[360, 320, 300, 320, 350]}
+              maxW={1500}
               startColor="background.yellow"
               endColor="base.gray200"
               fadeDuration={1}
@@ -75,7 +79,7 @@ export const Main = () => {
 
       {infoMovies.length > 0 && searchMovie === '' ? (
         <Flex align="center" justify="space-between" p={[2, 6, 10]}>
-          <ButtonApp
+          <Button
             background="background.yellow"
             color="base.gray500"
             onClick={beforePage}
@@ -83,27 +87,27 @@ export const Main = () => {
             isDisabled={isDisabledBeforePage}
           >
             Página anterior
-          </ButtonApp>
+          </Button>
 
-          <ButtonApp
+          <Button
             background="background.yellow"
             color="base.gray500"
             onClick={nextPage}
             colorHover="#ffce1f"
           >
             Próxima página
-          </ButtonApp>
+          </Button>
         </Flex>
       ) : (
         <Center>
-          <ButtonApp
+          <Button
             background="background.yellow"
             color="base.gray500"
             onClick={() => getSearchMovie(search)}
             colorHover="#ffce1f"
           >
             Catálogo inicial
-          </ButtonApp>
+          </Button>
         </Center>
       )}
     </Box>

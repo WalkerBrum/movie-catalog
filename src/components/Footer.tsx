@@ -1,10 +1,38 @@
 import { Flex, Box } from '@chakra-ui/react'
+import { title } from 'process'
 import {
   AiFillFacebook,
   AiFillGithub,
   AiFillInstagram,
   AiFillLinkedin,
 } from 'react-icons/ai'
+
+interface IFooterLinkProps {
+  href: string
+  title: string
+  children: React.ReactNode
+}
+
+const FooterLink = ({ href, title, children }: IFooterLinkProps) => {
+  return (
+    <Box
+      as="a"
+      href={href}
+      title={title}
+      color={'background.blue500'}
+      target="_blank"
+      rel="noopener noreferrer"
+      transition={'all ease-in-out 600ms'}
+      _hover={{
+        color: 'background.blue300',
+        boxShadow: '0px 0px 20px 0px #32a2f5',
+        transition: 'all ease-in-out 600ms',
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
 
 export const Footer = () => {
   return (
@@ -16,65 +44,27 @@ export const Footer = () => {
         p={5}
         color="background.blue500"
       >
-        <Box
-          as="a"
-          href="https://github.com/WalkerBrum"
-          title="Github Profile"
-          target="_blank"
-          transition={'all ease-in-out 600ms'}
-          _hover={{
-            color: 'background.blue300',
-            boxShadow: '0px 0px 20px 0px #32a2f5',
-            transition: 'all ease-in-out 600ms',
-          }}
-        >
+        <FooterLink href="https://github.com/WalkerBrum" title="Github Profile">
           <AiFillGithub />
-        </Box>
-        <Box
-          as="a"
+        </FooterLink>
+        <FooterLink
           href="https://www.linkedin.com/in/walkerlobato/"
           title="Linkedin Profile"
-          target="_blank"
-          rel="noopener noreferrer"
-          transition={'all ease-in-out 600ms'}
-          _hover={{
-            color: 'background.blue300',
-            boxShadow: '0px 0px 20px 0px #32a2f5',
-            transition: 'all ease-in-out 600ms',
-          }}
         >
           <AiFillLinkedin />
-        </Box>
-        <Box
-          as="a"
+        </FooterLink>
+        <FooterLink
           href="https://www.facebook.com/walker.brum"
           title="FaceBook Profile"
-          transition={'all ease-in-out 600ms'}
-          target="_blank"
-          rel="noopener noreferrer"
-          _hover={{
-            color: 'background.blue300',
-            boxShadow: '0px 0px 20px 0px #32a2f5',
-            transition: 'all ease-in-out 600ms',
-          }}
         >
           <AiFillFacebook />
-        </Box>
-        <Box
-          as="a"
+        </FooterLink>
+        <FooterLink
           href="https://www.instagram.com/brumwalker"
           title="Instagram"
-          target="_blank"
-          rel="noopener noreferrer"
-          transition={'all ease-in-out 600ms'}
-          _hover={{
-            color: 'background.blue300',
-            boxShadow: '0px 0px 20px 0px #32a2f5',
-            transition: 'all ease-in-out 600ms',
-          }}
         >
           <AiFillInstagram />
-        </Box>
+        </FooterLink>
       </Flex>
     </Box>
   )

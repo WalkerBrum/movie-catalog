@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button as ChakraButton } from '@chakra-ui/react'
 
 interface IButtonAppProps {
   background: string
@@ -10,7 +10,7 @@ interface IButtonAppProps {
   onClick?: () => void
 }
 
-export const ButtonApp = ({
+export const Button = ({
   background,
   color,
   isLoading,
@@ -20,7 +20,7 @@ export const ButtonApp = ({
   children,
 }: IButtonAppProps) => {
   return (
-    <Button
+    <ChakraButton
       bg={background}
       color={color}
       padding="1rem 2rem"
@@ -37,6 +37,6 @@ export const ButtonApp = ({
       onClick={onClick}
     >
       {children}
-    </Button>
+    </ChakraButton>
   )
 }
