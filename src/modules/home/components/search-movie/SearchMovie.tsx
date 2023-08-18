@@ -16,6 +16,12 @@ export const SearchMovie = () => {
     getSearchMovie(search)
   }
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      searchInfoMovie()
+    }
+  }
+
   return (
     <Flex align="center" justify="center" p={[2, 4, 6]}>
       <Input
@@ -28,6 +34,7 @@ export const SearchMovie = () => {
         maxW="800px"
         _placeholder={{ color: 'base.gray300' }}
         onChange={handleSearchMovie}
+        onKeyPress={handleKeyPress}
       />
 
       <Button
