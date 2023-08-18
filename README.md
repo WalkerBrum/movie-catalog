@@ -52,11 +52,11 @@ https://github.com/WalkerBrum/search-github-profile-react.git
 
 # 📷 Demonstração da Aplicação
 
-<img src="https://imgur.com/0Brr2t3" title="Print screen da página inicial"/>
-<img src="public/images/create-card.png" title="Print screen pesquisando filme início"/>
-<img src="public/images/delete-card.png" title="Print screen pesquisando filme fim"/>
-<img src="public/images/home-page-mobile.png" title="Print screen da página detalhe do filme início"/>
-<img src="public/images/home-page-mobile.png" title="Print screen da página detalhe do filme fim"/>
+<img src="public/images/home.jpg" title="Print screen da página inicial"/>
+<img src="public/images/search-begin.jpg" title="Print screen pesquisando filme início"/>
+<img src="public/images/search-end.jpgg" title="Print screen pesquisando filme fim"/>
+<img src="public/images//movie-begin.jpg" title="Print screen da página detalhe do filme início"/>
+<img src="public/images//movie-end.jpg" title="Print screen da página detalhe do filme fim"/>
 
 
 ## **Autor e Agradecimento**
