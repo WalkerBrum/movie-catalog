@@ -48,7 +48,7 @@ yarn dev
 Abra [http://localhost:3000](http://localhost:3000) com seu navegador para ver o resultado.
 
 ## **Clone do Projeto**
-https://github.com/WalkerBrum/search-github-profile-react.git
+https://github.com/WalkerBrum/movie-catalog.git
 
 # 📷 Demonstração da Aplicação
 
